@@ -14,7 +14,7 @@ class C42Dispacher(object):
           self.cache_time_interval = cti
           
       def c42_api_call(self,event_id):
-          time = 
+          self.start_t = time.time()
           # url initialization
           evt_details_url = "https://demo.calendar42.com/api/v2/events/"+event_id+"/"
           evt_sub_url = "https://demo.calendar42.com/api/v2/event-subscriptions/?event_ids=["+event_id+"]"
@@ -33,13 +33,7 @@ class C42Dispacher(object):
           # return responses from C42 API as json
           return json.loads(details_contents),json.loads(sub_contents)
           
-      def cache(self):
-          
-
-      def prepare_response(self,event_id):
-          # This method is the one that views.py calls in order to serve responses
-          # GET C42 api responses
-          # Extract information about the event
+      def combine_and_cache(self,event_id):
           details,subscriptions = self.c42_api_call(event_id)
           details_data = details['data']
           # although the data array only contains one element(in this case) i dont want to use "magic number" and access it by details_data[0]
@@ -59,4 +53,15 @@ class C42Dispacher(object):
           response['id'] = event_id
           response['title'] = title
           response['names'] = attendees
+          self.cached_response = response
           return response
+
+      def prepare_response(self,event_id):
+          # This method is the one that views.py calls in order to serve responses
+          #If there is no timestamp (Running for the first time)
+          if self.start_t == None:
+             return self.combine_and_cache(event_id)
+          if time.time() - self.start_t < self.cache_time_interval:
+                return self.cached_response,(time.time() - self.start_t)
+          else:
+                return self.combine_and_cache(event_id)

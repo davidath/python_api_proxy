@@ -19,8 +19,8 @@ due to the architecture our class will maintain workabillity.
 
 - __ init __ (simple constructor for api_token/cache_time_interval)
 - c42_api_call (method that performs multiple GET requests from C42 API)
-- prepare_response (method that combines responses from c42_api_call)
-- cache (method that caches the response for future uses)
+- prepare_response (method that decides if combine and cache should be used or return cached response)
+- combine_and_cache (combines responses from c42_api_call and caches them)
 
 ### Technologies used
 
