@@ -24,9 +24,8 @@ due to the architecture our class will maintain workabillity.
 
 ### Technologies used
 
-```sh
 - Django framework (Manipulating GET requests to our API proxy)
 - urllib2 (Manipulating requests and responses to C42 API)
 - json (Manipulating JSON)
 - time (Timestamps for cache purposes)
-```
+
