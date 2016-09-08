@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     #Input:  ID of the event that we need info on
     #Output: JSON Response popullated with event details and event subscriptions
 
-    url(r'^events-with-subscription/(?P<event_id>\w+)',views.event_sub,name='event_sub'),
+    url(r'^events-with-subscriptions/(?P<event_id>\w+)',views.event_sub,name='event_sub'),
 )

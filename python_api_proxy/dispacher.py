@@ -14,6 +14,7 @@ class C42Dispacher(object):
           self.cache_time_interval = cti
           
       def c42_api_call(self,event_id):
+          #Starting Timestamp
           self.start_t = time.time()
           # url initialization
           evt_details_url = "https://demo.calendar42.com/api/v2/events/"+event_id+"/"
@@ -34,6 +35,7 @@ class C42Dispacher(object):
           return json.loads(details_contents),json.loads(sub_contents)
           
       def combine_and_cache(self,event_id):
+          #Get C42 API responses
           details,subscriptions = self.c42_api_call(event_id)
           details_data = details['data']
           # although the data array only contains one element(in this case) i dont want to use "magic number" and access it by details_data[0]
@@ -53,15 +55,21 @@ class C42Dispacher(object):
           response['id'] = event_id
           response['title'] = title
           response['names'] = attendees
-          self.cached_response = response
+          self.cached_response = json.dumps(response)
           return response
 
       def prepare_response(self,event_id):
           # This method is the one that views.py calls in order to serve responses
           #If there is no timestamp (Running for the first time)
-          if self.start_t == None:
+          if self.start_t is None:
              return self.combine_and_cache(event_id)
-          if time.time() - self.start_t < self.cache_time_interval:
-                return self.cached_response,(time.time() - self.start_t)
+          #If class is not running for the first time then compare timestamps
+          #Extract cached response id
+          cache_json = json.loads(self.cached_response)
+          #If timestamp hasn't passed 4.2 minutes and user requests the same event then return cached response
+          if (time.time() - self.start_t < self.cache_time_interval) and (event_id == cache_json['id']):
+                #although timestamp comparing is not needed i'll leave it there for proof that the response is cached for 4.2 minutes
+                return json.loads(self.cached_response),(time.time() - self.start_t)
           else:
+                #Reload cached response
                 return self.combine_and_cache(event_id)
