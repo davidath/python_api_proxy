@@ -6,7 +6,7 @@ In order to accomplish the objective of this proxy i'll use a simple class calle
 Using classes makes the response more modular,more maintainable and reusable.
 Being that modular makes it less prone to struggle in case of changes.
 For example if we decide for a different path to our API proxy then all we have to do is change the path,
-due to the architecture our class will maintain workabillity.
+due to the architecture of our class, it will maintain workabillity.
 
 ### Dispacher's Attributes
 
@@ -27,7 +27,7 @@ due to the architecture our class will maintain workabillity.
 ```
 
 ### Modified during implementation
-Since cache method didn't due much but populating the cached_response attribute i decided to merge the methods
+Since cache method didn't do much but populating the cached_response attribute i decided to merge the methods
 ```sh
 - combine_and_cache (combines responses from c42_api_call and caches them)
 ```
