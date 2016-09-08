@@ -40,3 +40,13 @@ Since cache method didn't due much but populating the cached_response attribute 
 - json (Manipulating JSON)
 - time (Timestamps for cache purposes)
 
+## Installation & Run
+Install
+```sh
+ pip install -r requirements.txt
+```
+
+Run
+```sh
+python manage.py runserver <url>:<port>
+```
