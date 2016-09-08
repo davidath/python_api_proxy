@@ -27,9 +27,8 @@ due to the architecture our class will maintain workabillity.
 ```
 
 ### Modified during implementation
-```sh
 Since cache method didn't due much but populating the cached_response attribute i decided to merge the methods
-
+```sh
 - combine_and_cache (combines responses from c42_api_call and caches them)
 ```
 
